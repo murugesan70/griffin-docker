@@ -32,7 +32,7 @@ cp $HIVE_HOME/conf/hive-site.xml $SPARK_HOME/conf/
 
 $SPARK_HOME/sbin/start-all.sh
 
-nohup hive --service metastore > metastore.log &
+nohup hiveserver2 --service metastore > metastore.log &
 
 nohup livy-server > livy.log &
 

@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER org.apache.griffin
 
 #install wget, ssh, unzip
