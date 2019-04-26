@@ -17,6 +17,6 @@ hadoop fs -chmod g+w /tmp
 hadoop fs -chmod g+w /user/hive/warehouse
 
 # avro
-wget http://central.maven.org/maven2/com/databricks/spark-avro_2.10/4.0.0/spark-avro_2.10-4.0.0.jar
-hadoop fs -put spark-avro_2.10-4.0.0.jar /home/spark_lib/
-rm spark-avro_2.10-4.0.0.jar
+wget http://central.maven.org/maven2/com/databricks/spark-avro_2.11/4.0.0/spark-avro_2.11-4.0.0.jar
+hadoop fs -put spark-avro_2.11-4.0.0.jar /home/spark_lib/
+rm spark-avro_2.11-4.0.0.jar

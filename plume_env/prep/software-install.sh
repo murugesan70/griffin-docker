@@ -16,7 +16,7 @@ echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf
 echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
 
 # hadoop
-wget http://mirror.cogentco.com/pub/apache/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
 tar -xvf hadoop-2.7.3.tar.gz
 ln -s hadoop-2.7.3 hadoop
 
