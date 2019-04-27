@@ -7,17 +7,17 @@ cd $HADOOP_HOME/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; cu
 
 find /var/lib/mysql -type f -exec touch {} \; && service mysql start
 
-sed s/S3_ACCESS_KEY/AKIAJ2VPXWB7KOWSEWLA/g  $HADOOP_HOME/etc/hadoop/core-site.xml.template > $HADOOP_HOME/etc/hadoop/core-site.xml.template
-sed s/S3_ACCESS_SECRET_KEY/ILa3881llPSSQDelz22G94IeHvUqooYC8JOYGVN0/g $HADOOP_HOME/etc/hadoop/core-site.xml.template >> $HADOOP_HOME/etc/hadoop/core-site.xml.template 
+sed s/S3_ACCESS_KEY_ID/AKIAJ2VPXWB7KOWSEWLA/g  $HADOOP_HOME/etc/hadoop/core-site.xml.template >> $HADOOP_HOME/etc/hadoop/core-site.xml.template_backup
+sed s/S3_ACCESS_SECRET_KEY/ILa3881llPSSQDelz22G94IeHvUqooYC8JOYGVN0/g $HADOOP_HOME/etc/hadoop/core-site.xml.template_backup > $HADOOP_HOME/etc/hadoop/core-site.xml.template 
 sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/core-site.xml.template > $HADOOP_HOME/etc/hadoop/core-site.xml
 sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $HADOOP_HOME/etc/hadoop/yarn-site.xml
-sed s/S3_ACCESS_KEY/AKIAJ2VPXWB7KOWSEWLA/g  $HADOOP_HOME/etc/hadoop/mapred-site.xml.template > $HADOOP_HOME/etc/hadoop/mapred-site.xml.template
+sed s/S3_ACCESS_KEY_ID/AKIAJ2VPXWB7KOWSEWLA/g  $HADOOP_HOME/etc/hadoop/mapred-site.xml.template > $HADOOP_HOME/etc/hadoop/mapred-site.xml.template
 sed s/S3_ACCESS_SECRET_KEY/ILa3881llPSSQDelz22G94IeHvUqooYC8JOYGVN0/g $HADOOP_HOME/etc/hadoop/mapred-site.xml.template >> $HADOOP_HOME/etc/hadoop/mapred-site.xml.template 
 sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/mapred-site.xml.template > $HADOOP_HOME/etc/hadoop/mapred-site.xml
 
-sed s/S3_ACCESS_KEY/AKIAJ2VPXWB7KOWSEWLA/g  $HADOOP_HOME/etc/hadoop/hdfs-site.xml > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+sed s/S3_ACCESS_KEY_ID/AKIAJ2VPXWB7KOWSEWLA/g  $HADOOP_HOME/etc/hadoop/hdfs-site.xml > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 sed s/S3_ACCESS_SECRET_KEY/ILa3881llPSSQDelz22G94IeHvUqooYC8JOYGVN0/g $HADOOP_HOME/etc/hadoop/hdfs-site.xml >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-sed s/S3_ACCESS_KEY/AKIAJ2VPXWB7KOWSEWLA/g  $HIVE_HOME/conf/hive-site.xml.template > $HIVE_HOME/conf/hive-site.xml.template
+sed s/S3_ACCESS_KEY_ID/AKIAJ2VPXWB7KOWSEWLA/g  $HIVE_HOME/conf/hive-site.xml.template > $HIVE_HOME/conf/hive-site.xml.template
 sed s/S3_ACCESS_SECRET_KEY/ILa3881llPSSQDelz22G94IeHvUqooYC8JOYGVN0/g $HIVE_HOME/conf/hive-site.xml.template >> $HIVE_HOME/conf/hive-site.xml.template
 sed s/HOSTNAME/$HOSTNAME/ $HIVE_HOME/conf/hive-site.xml.template > $HIVE_HOME/conf/hive-site.xml
 
