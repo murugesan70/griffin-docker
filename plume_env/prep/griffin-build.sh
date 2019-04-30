@@ -2,7 +2,7 @@
 
 # apt-get git and maven
 apt-get update
-apt-get install git
+apt-get install git -y
 wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 tar -xvzf apache-maven-3.3.9-bin.tar.gz
 ln -s apache-maven-3.3.9 maven
