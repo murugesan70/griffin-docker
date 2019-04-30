@@ -36,3 +36,4 @@ mkdir livy/logs
 #cp conf/elasticsearch/elasticsearch.yml /etc/elasticsearch/
 #cp conf/elasticsearch/elasticsearch /etc/init.d/
 #chmod 755 /etc/init.d/elasticsearch
+

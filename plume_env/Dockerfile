@@ -16,6 +16,7 @@ RUN ./ssh-config.sh
 
 #software install
 RUN ./software-install.sh
+RUN ./griffin-build.sh
 RUN ./dir.sh && ./software-config.sh
 
 ENV JAVA_HOME /apache/jdk
