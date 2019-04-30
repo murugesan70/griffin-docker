@@ -27,4 +27,5 @@ cp service/target/service*SNAPSHOT.jar /root/service/service.jar
 # cleanup and remove
 cd /root/
 rmdir --ignore-fail-on-non-empty -p /apache/griffin
-rmdir --ignore-fail-on-non-empty -p /apache/apache-maven-3.3.9 /apache/maven
+rm /apache/maven
+rmdir --ignore-fail-on-non-empty -p /apache/apache-maven-3.3.9 
