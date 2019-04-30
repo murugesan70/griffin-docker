@@ -16,7 +16,6 @@ RUN ./ssh-config.sh
 
 #software install
 RUN ./software-install.sh
-RUN ./griffin-build.sh
 RUN ./dir.sh && ./software-config.sh
 
 ENV JAVA_HOME /apache/jdk
@@ -45,6 +44,9 @@ EXPOSE 9083 27017 6066
 EXPOSE 8080
 EXPOSE 8998
 EXPOSE 5432
+
+#build griffin
+RUN ./griffin-build.sh
 
 #mysql init
 RUN ln -s /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/mysql-connector-java.jar && ln -s /usr/share/java/mysql.jar $HIVE_HOME/lib/mysql.jar
