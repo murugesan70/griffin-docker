@@ -6,13 +6,14 @@ apt-get install git -y
 wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 tar -xvzf apache-maven-3.3.9-bin.tar.gz
 ln -s apache-maven-3.3.9 maven
-export PATH=/root/maven/bin:$PATH
+export PATH=/apache/maven/bin:$PATH
 
 # git clone griffin 
 git clone https://github.com/apache/griffin.git
 cd griffin/
-git checkout master
-/root/maven/bin/mvn clean package -DskipTests
+echo "$pwd"
+#git checkout master
+/apache/maven/bin/mvn clean package -DskipTests
 
 # cp measure and service jar in directories
 mkdir -p /root/measure
@@ -25,5 +26,5 @@ cp service/target/service*SNAPSHOT.jar /root/service/service.jar
 
 # cleanup and remove
 cd /root/
-rmdir -rf /root/griffin
-rmdir -rf /root/apache-maven-3.3.9 /root/maven
+rmdir -rf /apache/griffin
+rmdir -rf /apache/apache-maven-3.3.9 /apache/maven
