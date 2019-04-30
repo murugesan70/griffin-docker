@@ -12,7 +12,7 @@ export PATH=/root/maven/bin:$PATH
 git clone https://github.com/apache/griffin.git
 cd griffin/
 git checkout master
-mvn clean package -DskipTests
+/root/maven/bin/mvn clean package -DskipTests
 
 # cp measure and service jar in directories
 mkdir -p /root/measure
