@@ -35,5 +35,8 @@ $SPARK_HOME/sbin/start-all.sh
 nohup hiveserver2 --service metastore > metastore.log &
 
 nohup livy-server > livy.log &
+cd /root/service
+nohup java -jar service.jar > service.log &
+cd /root
 
 /bin/bash -c "bash"

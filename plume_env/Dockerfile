@@ -20,6 +20,8 @@ RUN ./dir.sh && ./software-config.sh
 
 ENV JAVA_HOME /apache/jdk
 ENV HADOOP_HOME /apache/hadoop
+ENV MONGO_HOME /apache/mongodb
+ENV HADOOP_AWS_HOME /apache/aws-sdk
 ENV HADOOP_INSTALL $HADOOP_HOME
 ENV HADOOP_MAPRED_HOME $HADOOP_HOME
 ENV HADOOP_COMMON_HOME $HADOOP_HOME
@@ -68,7 +70,10 @@ RUN chmod 755 /etc/bootstrap.sh
 
 #initial
 RUN hdfs namenode -format
-RUN /etc/bootstrap.sh && /apache/hdfs_file.sh && rm /apache/*.sh
+
+ADD prep /root
+RUN chmod 755 prepare.sh
+RUN /etc/bootstrap.sh && ./prepare.sh && /apache/hdfs_file.sh && rm /apache/*.sh 
 
 #bootstrap-all
 ADD bootstrap-all.sh /etc/
