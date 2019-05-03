@@ -59,6 +59,7 @@ WORKDIR /root
 ADD prep /root
 #postgresql init
 RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
+
 USER postgres
 WORKDIR /var/lib/postgresql
 RUN /etc/init.d/postgresql start \
@@ -76,7 +77,8 @@ RUN chmod 755 /etc/bootstrap.sh
 RUN hdfs namenode -format
 
 RUN chmod 755 prepare.sh
-RUN /etc/bootstrap.sh && ./prepare.sh && /apache/hdfs_file.sh && rm /apache/*.sh 
+RUN /etc/bootstrap.sh &&  /apache/hdfs_file.sh && rm /apache/*.sh 
+RUN ./prepare.sh
 
 #bootstrap-all
 ADD bootstrap-all.sh /etc/
