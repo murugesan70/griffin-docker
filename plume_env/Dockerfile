@@ -54,7 +54,11 @@ RUN ./griffin-build.sh
 RUN ln -s /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/mysql-connector-java.jar && ln -s /usr/share/java/mysql.jar $HIVE_HOME/lib/mysql.jar
 RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mysql-init.sh
 
+WORKDIR /root
+
+ADD prep /root
 #postgresql init
+RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 USER postgres
 WORKDIR /var/lib/postgresql
 RUN /etc/init.d/postgresql start \
@@ -71,7 +75,6 @@ RUN chmod 755 /etc/bootstrap.sh
 #initial
 RUN hdfs namenode -format
 
-ADD prep /root
 RUN chmod 755 prepare.sh
 RUN /etc/bootstrap.sh && ./prepare.sh && /apache/hdfs_file.sh && rm /apache/*.sh 
 
