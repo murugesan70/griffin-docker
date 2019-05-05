@@ -61,7 +61,7 @@ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sd
 mkdir -p aws-sdk
 mv aws-java-sdk*.jar aws-sdk
 ln -s aws-sdk/aws-java-sdk-1.7.4.jar hive/lib
-ln -s aws-sdk/aws-java-sdk-1.7.4.jar hadoop/share/hadoop/tools/lib
+#ln -s aws-sdk/aws-java-sdk-1.7.4.jar hadoop/share/hadoop/tools/lib
 ln -s aws-sdk/aws-java-sdk-1.7.4.jar spark/jars
 
 wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.3/hadoop-aws-2.7.3.jar
