@@ -68,10 +68,12 @@ RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mys
 
 USER postgres
 WORKDIR /var/lib/postgresql
+RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 RUN /etc/init.d/postgresql start \
     && psql --command "CREATE USER griffin WITH SUPERUSER PASSWORD '123456';" \
     && createdb -O griffin quartz \
-    && echo "localhost:5432:quartz:griffin:123456" > .pgpass && chmod 600 .pgpass
+    && echo "localhost:5432:quartz:griffin:123456" > .pgpass && chmod 600 .pgpass \
+    && psql -p 5432 -h localhost -U griffin -f init.sql quartz
 USER root
 WORKDIR /root
 
@@ -84,8 +86,6 @@ RUN hdfs namenode -format
 
 RUN /etc/bootstrap.sh &&  /apache/hdfs_file.sh && rm /apache/*.sh 
 
-ADD prep /root
-RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 #RUN chmod 755 prepare.sh
 #RUN ./prepare.sh
 
