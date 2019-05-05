@@ -54,7 +54,7 @@ RUN ./griffin-build.sh
 RUN ln -s /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/mysql-connector-java.jar && ln -s /usr/share/java/mysql.jar $HIVE_HOME/lib/mysql.jar
 RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mysql-init.sh
 
-WORKDIR /root
+#WORKDIR /root
 
 #postgresql init
 
@@ -78,8 +78,8 @@ RUN /etc/bootstrap.sh &&  /apache/hdfs_file.sh && rm /apache/*.sh
 
 ADD prep /root
 RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
-RUN chmod 755 prepare.sh
-RUN ./prepare.sh
+#RUN chmod 755 prepare.sh
+#RUN ./prepare.sh
 
 #bootstrap-all
 ADD bootstrap-all.sh /etc/
