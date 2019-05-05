@@ -56,9 +56,7 @@ RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mys
 
 WORKDIR /root
 
-ADD prep /root
 #postgresql init
-RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 
 USER postgres
 WORKDIR /var/lib/postgresql
@@ -76,8 +74,11 @@ RUN chmod 755 /etc/bootstrap.sh
 #initial
 RUN hdfs namenode -format
 
-RUN chmod 755 prepare.sh
 RUN /etc/bootstrap.sh &&  /apache/hdfs_file.sh && rm /apache/*.sh 
+
+ADD prep /root
+RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
+RUN chmod 755 prepare.sh
 RUN ./prepare.sh
 
 #bootstrap-all
