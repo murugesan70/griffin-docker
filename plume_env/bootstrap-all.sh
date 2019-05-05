@@ -54,6 +54,7 @@ sed s/HOSTNAME/$HOSTNAME/ /root/service/config/application.properties_temp > /ro
 rm /root/service/config/application.properties_temp
 
 #json
+sed s/ENV_ES_URL/$ENV_ES_URL/ /root/json/env.json.template > /root/json.env.json
 hadoop fs -put json/*.json /griffin/json/
 
 cd /root/service
