@@ -36,13 +36,7 @@ nohup hiveserver2 --service metastore > metastore.log &
 
 nohup livy-server > livy.log &
 
-#hadoop fs -mkdir /griffin
-#hadoop fs -mkdir /griffin/json
-#hadoop fs -mkdir /griffin/persist
-#hadoop fs -mkdir /griffin/checkpoint
 
-#hadoop fs -mkdir /griffin/data
-#hadoop fs -mkdir /griffin/data/batch
 
 #measure file
 hadoop fs -put measure/griffin-measure.jar /griffin/
