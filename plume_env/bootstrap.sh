@@ -1,7 +1,7 @@
 #!/bin/bash
 
 $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-rm /apache/pids/*
+#rm /apache/pids/*
 
 cd $HADOOP_HOME/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; curl -LO $cp ; done; cd -
 
