@@ -62,13 +62,13 @@ RUN ./griffin-build.sh
 RUN ln -s /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/mysql-connector-java.jar && ln -s /usr/share/java/mysql.jar $HIVE_HOME/lib/mysql.jar
 RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mysql-init.sh
 
-#WORKDIR /root
+WORKDIR /root
 
 #postgresql init
+RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 
 USER postgres
 WORKDIR /var/lib/postgresql
-RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 RUN /etc/init.d/postgresql start \
     && psql --command "CREATE USER griffin WITH SUPERUSER PASSWORD '123456';" \
     && createdb -O griffin quartz \
