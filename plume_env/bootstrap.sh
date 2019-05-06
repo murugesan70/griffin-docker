@@ -7,6 +7,7 @@ cd $HADOOP_HOME/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; cu
 
 find /var/lib/mysql -type f -exec touch {} \; && service mysql start
 
+echo sed -i 's/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY/g'  $HADOOP_HOME/etc/hadoop/core-site.xml.template 
 sed -i 's/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY/g'  $HADOOP_HOME/etc/hadoop/core-site.xml.template 
 sed -i 's/S3_ACCESS_SECRET_KEY/$S3_SECRET_KEY/g' $HADOOP_HOME/etc/hadoop/core-site.xml.template
 sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/core-site.xml.template > $HADOOP_HOME/etc/hadoop/core-site.xml

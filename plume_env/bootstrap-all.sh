@@ -36,6 +36,15 @@ nohup hiveserver2 --service metastore > metastore.log &
 
 nohup livy-server > livy.log &
 
+# griffin dir
+hadoop fs -mkdir /griffin
+hadoop fs -mkdir /griffin/json
+hadoop fs -mkdir /griffin/persist
+hadoop fs -mkdir /griffin/checkpoint
+
+hadoop fs -mkdir /griffin/data
+hadoop fs -mkdir /griffin/data/batch
+
 
 
 #measure file
@@ -48,7 +57,7 @@ sed s/HOSTNAME/$HOSTNAME/ /root/service/config/application.properties_temp > /ro
 rm /root/service/config/application.properties_temp
 
 #json
-sed s/ENV_ES_URL/$ENV_ES_URL/ /root/json/env.json.template > /root/json.env.json
+sed s/ENV_ES_URL/$ENV_ES_URL/ /root/json/env.json.template > /root/json/env.json
 hadoop fs -put json/*.json /griffin/json/
 
 cd /root/service
