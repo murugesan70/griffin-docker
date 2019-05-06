@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER org.apache.griffin
 
 #install wget, ssh, unzip
-RUN apt-get update && apt-get install wget -y && apt-get install openssh-client openssh-server -y && apt-get install unzip curl -y && apt-get install vim -y && apt-get install net-tools -y && apt-get install libcurl3 php5-curl -y
+RUN apt-get update && apt-get install wget -y && apt-get install openssh-client openssh-server -y && apt-get install unzip curl -y && apt-get install vim -y && apt-get install net-tools -y 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install mysql-server -y && DEBIAN_FRONTEND=noninteractive apt-get install libmysql-java -y
 ARG ENV_ES_URL
 ARG ENV_S3_ACCESS_KEY
