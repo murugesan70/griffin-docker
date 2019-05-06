@@ -13,7 +13,7 @@ git clone https://github.com/apache/griffin.git
 cd griffin/
 echo "$pwd"
 #git checkout master
-/apache/maven/bin/mvn clean package -DskipTests
+/apache/maven/bin/mvn clean install -DskipTests
 
 # cp measure and service jar in directories
 mkdir -p /root/measure
