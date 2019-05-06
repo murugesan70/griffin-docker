@@ -65,7 +65,7 @@ RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mys
 WORKDIR /root
 
 #postgresql init
-RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
+RUN cp prep/init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 
 USER postgres
 WORKDIR /var/lib/postgresql
