@@ -19,8 +19,8 @@ RUN ./ssh-config.sh
 
 #ARG env 
 ENV ES_URL=$ENV_ES_URL
-ENV S3_ACCESS_KEY=$ENV_S3_ACCESS_KEY
-ENV S3_SECRET_KEY=$ENV_S3_SECRET_KEY
+ENV S3_ACCESS_KEY_ID=$ENV_S3_ACCESS_KEY
+ENV S3_ACCESS_SECRET_KEY=$ENV_S3_SECRET_KEY
 
 #software install
 RUN ./software-install.sh
@@ -65,7 +65,6 @@ RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mys
 WORKDIR /root
 
 #postgresql init
-ADD prep /root
 RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 
 USER postgres

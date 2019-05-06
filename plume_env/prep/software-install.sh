@@ -50,11 +50,14 @@ wget https://repo1.maven.org/maven2/org/mongodb/mongo-java-driver/3.4.3/mongo-ja
 mkdir -p mongodb
 mv mongo-java-driver-*.jar mongodb
 ln -s /apache/mongodb/mongo-java-driver-3.4.3.jar hive/lib
+ln -s /apache/mongodb/mongo-java-driver-3.4.3.jar spark/jars
 wget https://repo1.maven.org/maven2/org/mongodb/mongo-hadoop/mongo-hadoop-core/1.5.2/mongo-hadoop-core-1.5.2.jar
 wget https://repo1.maven.org/maven2/org/mongodb/mongo-hadoop/mongo-hadoop-hive/1.5.2/mongo-hadoop-hive-1.5.2.jar
 mv mongo-hadoop-*.jar mongodb
 ln -s /apache/mongodb/mongo-hadoop-core-1.5.2.jar hive/lib
+ln -s /apache/mongodb/mongo-hadoop-core-1.5.2.jar spark/jars
 ln -s /apache/mongodb/mongo-hadoop-hive-1.5.2.jar hive/lib
+ln -s /apache/mongodb/mongo-hadoop-hive-1.5.2.jar spark/jars
 
 # aws java sdk and hadoop-aws jars
 wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
