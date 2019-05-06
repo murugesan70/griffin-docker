@@ -66,7 +66,7 @@ WORKDIR /root
 
 #postgresql init
 ADD prep /root
-RUN cp /init/postgresql_table_init.sql /var/lib/postgresql/init.sql
+RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 
 USER postgres
 WORKDIR /var/lib/postgresql
