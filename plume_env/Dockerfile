@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER org.apache.griffin
 
 #install wget, ssh, unzip
-RUN apt-get update && apt-get install wget -y && apt-get install openssh-client openssh-server -y && apt-get install unzip curl -y && apt-get install vim -y && apt-get install net-tools -y && apt-get install nodejs -y && apt-get install npm -y
+RUN apt-get update && apt-get install wget -y && apt-get install openssh-client openssh-server -y && apt-get install unzip curl -y && apt-get install vim -y && apt-get install net-tools -y && apt-get install awscli -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install mysql-server -y && DEBIAN_FRONTEND=noninteractive apt-get install libmysql-java -y
 ARG ENV_ES_URL
 ARG ENV_S3_ACCESS_KEY
@@ -18,9 +18,11 @@ EXPOSE 2122
 RUN ./ssh-config.sh
 
 #ARG env 
-ENV ES_URL=$ENV_ES_URL
-ENV S3_ACCESS_KEY_ID=$ENV_S3_ACCESS_KEY
-ENV S3_ACCESS_SECRET_KEY=$ENV_S3_SECRET_KEY
+ENV ES_URL $ENV_ES_URL
+ENV S3_ACCESS_KEY_ID $ENV_S3_ACCESS_KEY
+ENV AWS_ACCESS_KEY_ID $ENV_S3_ACCESS_KEY
+ENV S3_ACCESS_SECRET_KEY $ENV_S3_SECRET_KEY
+ENV AWS_SECRET_ACCESS_KEY $ENV_S3_SECRET_KEY
 
 #software install
 RUN ./software-install.sh
@@ -65,6 +67,7 @@ RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mys
 WORKDIR /root
 
 #postgresql init
+ADD prep /root
 RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
 
 USER postgres

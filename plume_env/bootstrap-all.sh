@@ -8,6 +8,23 @@ cd $HADOOP_HOME/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; cu
 find /var/lib/mysql -type f -exec touch {} \; && service mysql start
 /etc/init.d/postgresql start
 
+echo $S3_ACCESS_KEY_ID
+echo $S3_ACCESS_SECRET_KEY
+echo HOSTNAME = $HOSTNAME
+sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HADOOP_HOME/etc/hadoop/core-site.xml.template  >> $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak
+sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak >> $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak1
+sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak1 > $HADOOP_HOME/etc/hadoop/core-site.xml.template
+sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $HADOOP_HOME/etc/hadoop/yarn-site.xml
+sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HADOOP_HOME/etc/hadoop/mapred-site.xml.template  >> $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak
+sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak >> $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak1
+sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak1 > $HADOOP_HOME/etc/hadoop/mapred-site.xml.template
+
+sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HADOOP_HOME/etc/hadoop/hdfs-site.xml  >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml.bak
+sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml.bak > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HIVE_HOME/conf/hive-site.xml.template  >> $HIVE_HOME/conf/hive-site.xml.template.bak
+sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HIVE_HOME/conf/hive-site.xml.template.bak  > $HIVE_HOME/conf/hive-site.xml.template.bak1
+sed s/HOSTNAME/$HOSTNAME/ $HIVE_HOME/conf/hive-site.xml.template.bak1 > $HIVE_HOME/conf/hive-site.xml.template
+
 sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/core-site.xml.template > $HADOOP_HOME/etc/hadoop/core-site.xml
 sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $HADOOP_HOME/etc/hadoop/yarn-site.xml
 sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/mapred-site.xml.template > $HADOOP_HOME/etc/hadoop/mapred-site.xml
@@ -57,11 +74,12 @@ sed s/HOSTNAME/$HOSTNAME/ /root/service/config/application.properties_temp > /ro
 rm /root/service/config/application.properties_temp
 
 #json
-sed s/ENV_ES_URL/$ENV_ES_URL/ /root/json/env.json.template > /root/json/env.json
+sed s#ENV_ES_URL#"$ENV_ES_URL"# /root/json/env.json.template >> /root/json/env.json
+cp /root/json/env.json /root/service/config/env_batch.json
 hadoop fs -put json/*.json /griffin/json/
 
 cd /root/service
-nohup java -jar service.jar > service.log &
+nohup java -jar -Xmx1500m service.jar > service.log &
 cd /root
 
 /bin/bash -c "bash"
