@@ -19,9 +19,11 @@ apt-get install git -y
 mkdir -p /root/measure
 mkdir -p /root/service
 mkdir -p /root/jars
-cp griffin-measure.jar /root/measure/griffin-measure.jar
-cp hive-serde-0.11.0.jar /root/jars
-rm griffin-measure.jar hive-serde-0.11.0.jar 
+
+cp /apache/griffin-jars/0.5.0/griffin-measure.jar     /root/measure
+cp /apache/griffin-jars/0.5.0/service.jar             /root/service
+cp /apache/griffin-jars/0.5.0/hive-serde-0.11.0.jar   /root/jars
+
 #cp measure/target/measure*.jar /root/measure/griffin-measure.jar
 #cp service/target/service*SNAPSHOT.jar /root/service/service.jar
 
