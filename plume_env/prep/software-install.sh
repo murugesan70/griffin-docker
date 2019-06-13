@@ -31,9 +31,9 @@ tar -xvf spark-2.2.1-bin-hadoop2.7.tgz
 ln -s spark-2.2.1-bin-hadoop2.7 spark
 
 # hive
-wget https://www.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
-tar -xvf apache-hive-2.3.5-bin.tar.gz
-ln -s apache-hive-2.3.5-bin hive
+wget http://archive.apache.org/dist/hive/hive-2.3.4/apache-hive-2.3.4-bin.tar.gz
+tar -xvf apache-hive-2.3.4-bin.tar.gz
+ln -s apache-hive-2.3.4-bin hive
 
 # livy
 wget http://archive.cloudera.com/beta/livy/livy-server-0.3.0.zip
@@ -73,8 +73,13 @@ ln -s /apache/aws-sdk/hadoop-aws-2.7.3.jar hive/lib
 #ln -s aws-sdk/hadoop-aws-2.7.3.jar hadoop/share/hadoop/tools/lib
 ln -s /apache/aws-sdk/hadoop-aws-2.7.3.jar spark/jars
 
+# hive-serde
+https://repo1.maven.org/maven2/org/apache/hive/hive-serde/0.11.0/hive-serde-0.11.0.jar
+mkdir -p /root/jars
+mv hive-serde-*.jar /root/jars
+
 #remove install packages
-rm jdk8-linux-x64.tar.gz hadoop-2.7.3.tar.gz scala-2.11.8.tgz spark-2.2.1-bin-hadoop2.7.tgz apache-hive-2.3.5-bin.tar.gz livy-server-0.3.0.zip
+rm jdk8-linux-x64.tar.gz hadoop-2.7.3.tar.gz scala-2.11.8.tgz spark-2.2.1-bin-hadoop2.7.tgz apache-hive-2.3.4-bin.tar.gz livy-server-0.3.0.zip
 
 #remove extra files
 rm -rf hadoop/share/doc

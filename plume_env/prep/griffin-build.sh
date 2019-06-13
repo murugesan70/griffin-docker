@@ -1,37 +1,43 @@
 #!/bin/bash
 
-# apt-get git and maven
-#apt-get update
-apt-get install git -y
-#wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-#tar -xvzf apache-maven-3.3.9-bin.tar.gz
-#ln -s apache-maven-3.3.9 maven
-#export PATH=/apache/maven/bin:$PATH
-
-# git clone griffin 
-#git clone https://github.com/apache/griffin.git
-#cd griffin/
-#echo "$pwd"
-#git checkout griffin-0.5.0
-#/apache/maven/bin/mvn clean install -DskipTests
-
-# cp measure and service jar in directories
+# griffin
 mkdir -p /root/measure
 mkdir -p /root/service
-mkdir -p /root/jars
 
-cp /apache/griffin-jars/0.5.0/griffin-measure.jar     /root/measure
-cp /apache/griffin-jars/0.5.0/service.jar             /root/service
-cp /apache/griffin-jars/0.5.0/hive-serde-0.11.0.jar   /root/jars
+aws s3 cp s3://plume-dist/griffin/griffin-0.5.0-bin.tar.gz ./
+if [ $? -eq 0 ]; then
+    tar -xvf griffin-0.5.0-bin.tar.gz
 
-#cp measure/target/measure*.jar /root/measure/griffin-measure.jar
-#cp service/target/service*SNAPSHOT.jar /root/service/service.jar
+    ln -s /apache/griffin-0.5.0/griffin-measure.jar     /root/measure
+    ln -s /apache/griffin-0.5.0/service.jar             /root/service
 
-# copy griffin service configs
+    # cleanup and remove
+    rm griffin-0.5.0-bin.tar.gz
+else
+    # git
+    apt-get update
+    apt-get install git -y
 
+    # maven
+    wget http://www-eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+    tar -xvzf apache-maven-3.3.9-bin.tar.gz
+    ln -s apache-maven-3.3.9 maven
+    export PATH=/apache/maven/bin:$PATH
 
-# cleanup and remove
+    # git clone griffin
+    git clone https://github.com/apache/griffin.git
+    cd griffin/
+    echo "$pwd"
+    git checkout griffin-0.5.0
+    /apache/maven/bin/mvn clean install -DskipTests
+
+    cp measure/target/measure*.jar /root/measure/griffin-measure.jar
+    cp service/target/service*SNAPSHOT.jar /root/service/service.jar
+
+    # cleanup and remove
+    rmdir --ignore-fail-on-non-empty -p /apache/griffin
+    rm /apache/maven
+    rmdir --ignore-fail-on-non-empty -p /apache/apache-maven-3.3.9
+fi
+
 cd /root/
-#rmdir --ignore-fail-on-non-empty -p /apache/griffin
-#rm /apache/maven
-#rmdir --ignore-fail-on-non-empty -p /apache/apache-maven-3.3.9 

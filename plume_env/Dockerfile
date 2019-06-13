@@ -58,7 +58,6 @@ EXPOSE 8998
 EXPOSE 5432
 
 #build griffin
-COPY griffin-jars /apache/griffin-jars
 RUN ./griffin-build.sh
 
 #mysql init
