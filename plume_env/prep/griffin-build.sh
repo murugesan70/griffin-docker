@@ -31,8 +31,8 @@ else
     git checkout griffin-0.5.0
     /apache/maven/bin/mvn clean install -DskipTests
 
-    cp measure/target/measure*.jar /root/measure/griffin-measure.jar
-    cp service/target/service*SNAPSHOT.jar /root/service/service.jar
+    cp measure/target/measure-0.5.0.jar /root/measure/griffin-measure.jar
+    cp service/target/service-0.5.0.jar /root/service/service.jar
 
     # cleanup and remove
     rmdir --ignore-fail-on-non-empty -p /apache/griffin
