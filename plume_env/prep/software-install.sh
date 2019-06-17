@@ -74,7 +74,7 @@ ln -s /apache/aws-sdk/hadoop-aws-2.7.3.jar hive/lib
 ln -s /apache/aws-sdk/hadoop-aws-2.7.3.jar spark/jars
 
 # hive-serde
-https://repo1.maven.org/maven2/org/apache/hive/hive-serde/0.11.0/hive-serde-0.11.0.jar
+wget https://repo1.maven.org/maven2/org/apache/hive/hive-serde/0.11.0/hive-serde-0.11.0.jar
 mkdir -p /root/jars
 mv hive-serde-*.jar /root/jars
 

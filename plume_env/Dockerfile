@@ -44,6 +44,9 @@ ENV HIVE_HOME /apache/hive
 ENV HADOOP_USER_CLASSPATH_FIRST true
 ENV LIVY_HOME /apache/livy
 
+# create hdfs-site.xml.template, necessary, if we want to replace S3_ACCESS_KEY_ID, S3_ACCESS_SECRET_KEY anytime later
+RUN cp $HADOOP_HOME/etc/hadoop/hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml.template
+
 ENV PATH $JAVA_HOME/bin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SCALA_HOME/bin:$SPARK_HOME/bin:$HIVE_HOME/bin:$LIVY_HOME/bin
 
 EXPOSE 3306

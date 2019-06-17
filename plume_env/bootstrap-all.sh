@@ -11,25 +11,36 @@ find /var/lib/mysql -type f -exec touch {} \; && service mysql start
 echo $S3_ACCESS_KEY_ID
 echo $S3_ACCESS_SECRET_KEY
 echo HOSTNAME = $HOSTNAME
-sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HADOOP_HOME/etc/hadoop/core-site.xml.template  >> $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak
-sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak >> $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak1
-sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/core-site.xml.template.bak1 > $HADOOP_HOME/etc/hadoop/core-site.xml.template
-sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $HADOOP_HOME/etc/hadoop/yarn-site.xml
-sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HADOOP_HOME/etc/hadoop/mapred-site.xml.template  >> $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak
-sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak >> $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak1
-sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/mapred-site.xml.template.bak1 > $HADOOP_HOME/etc/hadoop/mapred-site.xml.template
 
-sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HADOOP_HOME/etc/hadoop/hdfs-site.xml  >> $HADOOP_HOME/etc/hadoop/hdfs-site.xml.bak
-sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HADOOP_HOME/etc/hadoop/hdfs-site.xml.bak > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-sed  "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g"  $HIVE_HOME/conf/hive-site.xml.template  >> $HIVE_HOME/conf/hive-site.xml.template.bak
-sed  "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" $HIVE_HOME/conf/hive-site.xml.template.bak  > $HIVE_HOME/conf/hive-site.xml.template.bak1
-sed s/HOSTNAME/$HOSTNAME/ $HIVE_HOME/conf/hive-site.xml.template.bak1 > $HIVE_HOME/conf/hive-site.xml.template
+# core-site.xml
+cat $HADOOP_HOME/etc/hadoop/core-site.xml.template \
+    | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
+    | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    | sed "s/HOSTNAME/$HOSTNAME/g" \
+    > $HADOOP_HOME/etc/hadoop/core-site.xml
 
-sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/core-site.xml.template > $HADOOP_HOME/etc/hadoop/core-site.xml
-sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $HADOOP_HOME/etc/hadoop/yarn-site.xml
-sed s/HOSTNAME/$HOSTNAME/ $HADOOP_HOME/etc/hadoop/mapred-site.xml.template > $HADOOP_HOME/etc/hadoop/mapred-site.xml
+# yarn-site.xml
+sed "s/HOSTNAME/$HOSTNAME/g" $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $HADOOP_HOME/etc/hadoop/yarn-site.xml
 
-sed s/HOSTNAME/$HOSTNAME/ $HIVE_HOME/conf/hive-site.xml.template > $HIVE_HOME/conf/hive-site.xml
+# mapred-site.xml
+cat $HADOOP_HOME/etc/hadoop/mapred-site.xml.template \
+    | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
+    | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    | sed "s/HOSTNAME/$HOSTNAME/g" \
+    > $HADOOP_HOME/etc/hadoop/mapred-site.xml
+
+# hdfs-site.xml
+cat $HADOOP_HOME/etc/hadoop/hdfs-site.xml.template \
+    | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
+    | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+
+# hive-site.xml
+cat $HIVE_HOME/conf/hive-site.xml.template \
+    | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
+    | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    | sed "s/HOSTNAME/$HOSTNAME/g" \
+    > $HIVE_HOME/conf/hive-site.xml
 
 /etc/init.d/ssh start
 
@@ -65,16 +76,17 @@ hadoop fs -mkdir /griffin/data/batch
 
 
 #measure file
-hadoop fs -put measure/griffin-measure.jar /griffin/
+hadoop fs -put /root/measure/griffin-measure.jar /griffin/
 
 
 #service
-sed s/ES_HOSTNAME/$ES_HOSTNAME/ /root/service/config/application.properties.template > /root/service/config/application.properties_temp
-sed s/HOSTNAME/$HOSTNAME/ /root/service/config/application.properties_temp > /root/service/config/application.properties
-rm /root/service/config/application.properties_temp
+cat /root/service/config/application.properties.template \
+    | sed "s/ES_HOSTNAME/$ES_HOSTNAME/g" \
+    | sed "s/HOSTNAME/$HOSTNAME/g" \
+    > /root/service/config/application.properties
 
 #json
-sed s#ENV_ES_URL#"$ENV_ES_URL"# /root/json/env.json.template >> /root/json/env.json
+sed "s|ENV_ES_URL|$ENV_ES_URL|g" /root/json/env.json.template > /root/json/env.json
 cp /root/json/env.json /root/service/config/env_batch.json
 hadoop fs -put json/*.json /griffin/json/
 
