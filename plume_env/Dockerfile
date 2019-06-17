@@ -1,9 +1,10 @@
 FROM ubuntu:16.04
 MAINTAINER org.apache.griffin
 
-#install wget, ssh, unzip
+# install wget, ssh, unzip
 RUN apt-get update && apt-get install wget -y && apt-get install openssh-client openssh-server -y && apt-get install unzip curl -y && apt-get install vim -y && apt-get install net-tools -y && apt-get install awscli -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install mysql-server -y && DEBIAN_FRONTEND=noninteractive apt-get install libmysql-java -y
+ARG ENV_POSTGRESQL_HOSTNAME
 ARG ENV_ES_URL
 ARG ENV_S3_ACCESS_KEY
 ARG ENV_S3_SECRET_KEY
@@ -14,17 +15,18 @@ ADD conf /apache/conf
 
 EXPOSE 2122
 
-#ssh-config
+# ssh-config
 RUN ./ssh-config.sh
 
 #ARG env 
+ENV POSTGRESQL_HOSTNAME $ENV_POSTGRESQL_HOSTNAME
 ENV ES_URL $ENV_ES_URL
 ENV S3_ACCESS_KEY_ID $ENV_S3_ACCESS_KEY
 ENV AWS_ACCESS_KEY_ID $ENV_S3_ACCESS_KEY
 ENV S3_ACCESS_SECRET_KEY $ENV_S3_SECRET_KEY
 ENV AWS_SECRET_ACCESS_KEY $ENV_S3_SECRET_KEY
 
-#software install
+# software install
 RUN ./software-install.sh
 RUN ./dir.sh && ./software-config.sh
 
@@ -58,36 +60,23 @@ EXPOSE 49707
 EXPOSE 9083 27017 6066
 EXPOSE 8080
 EXPOSE 8998
-EXPOSE 5432
 
-#build griffin
+# build griffin
 RUN ./griffin-build.sh
 
-#mysql init
+# mysql init
 RUN ln -s /usr/share/java/mysql-connector-java.jar $HIVE_HOME/lib/mysql-connector-java.jar && ln -s /usr/share/java/mysql.jar $HIVE_HOME/lib/mysql.jar
 RUN cd /apache/conf/mysql && cp bind_0.cnf /etc/mysql/conf.d/bind_0.cnf && ./mysql-init.sh
 
-WORKDIR /root
-
-#postgresql init
-ADD prep /root
-RUN cp init/postgresql_table_init.sql /var/lib/postgresql/init.sql
-
-USER postgres
-WORKDIR /var/lib/postgresql
-RUN /etc/init.d/postgresql start \
-    && psql --command "CREATE USER griffin WITH SUPERUSER PASSWORD '123456';" \
-    && createdb -O griffin quartz \
-    && echo "localhost:5432:quartz:griffin:123456" > .pgpass && chmod 600 .pgpass \
-    && psql -p 5432 -h localhost -U griffin -f init.sql quartz
 USER root
 WORKDIR /root
+ADD prep /root
 
-#bootstrap
+# bootstrap
 ADD bootstrap.sh /etc/
 RUN chmod 755 /etc/bootstrap.sh
 
-#initial
+# initial
 RUN hdfs namenode -format
 
 RUN /etc/bootstrap.sh &&  /apache/hdfs_file.sh && rm /apache/*.sh 
@@ -95,7 +84,7 @@ RUN /etc/bootstrap.sh &&  /apache/hdfs_file.sh && rm /apache/*.sh
 #RUN chmod 755 prepare.sh
 #RUN ./prepare.sh
 
-#bootstrap-all
+# bootstrap-all
 ADD bootstrap-all.sh /etc/
 RUN chmod 755 /etc/bootstrap-all.sh
 
