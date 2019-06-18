@@ -17,7 +17,7 @@
 # under the License.
 #
 
-spring.datasource.url = jdbc:postgresql://HOSTNAME:5432/quartz?autoReconnect=true&useSSL=false
+spring.datasource.url = jdbc:postgresql://POSTGRESQL_HOSTNAME:5432/quartz?autoReconnect=true&useSSL=false
 spring.datasource.username = griffin
 spring.datasource.password = 123456
 spring.jpa.generate-ddl=true

@@ -1,28 +1,55 @@
-env:
-  image: env2
-  hostname: env2
-  links:
-    - es
-  environment:
-    ES_HOSTNAME: es
-  volumes:
-    - /var/lib/mysql
-  ports:
-    - 32122:2122
-    - 38088:8088
-    - 33306:3306
-    - 38042:8042
-    - 39083:9083
-    - 38998:8998
-    - 38080:8080
-    - 35432:5432
-  tty: true
-  container_name: env2
-
-es:
-  image: bhlx3lyx7/elasticsearch
-  hostname: es
-  ports:
-    - 39200:9200
-    - 39300:9300
-  container_name: es
+version: '3.4'
+volumes:
+  mysql_data:
+  postgresql_data:
+#  es_data:
+services:
+  griffin:
+    build:
+      context: .
+      args:
+        - ENV_ES_URL                        # elasticsearch, url,
+                                            #   plume uses external es, this value is defined in .env
+                                            #   in case you do not have any ->
+                                            #     - uncomment es (volume, link, service)
+                                            #     - set ENV_ES_URL=http://es:9200
+        - ENV_S3_ACCESS_KEY                 # this value is defined in .env
+        - ENV_S3_SECRET_KEY                 # this value is defined in .env
+        - ENV_POSTGRESQL_HOSTNAME=postgres  # postgresql, hostname, service postgres
+    image: plume-griffin:0.2.6
+    hostname: griffin
+    links:
+      - postgres
+    #  - es
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - 32122:2122
+      - 38088:8088  # yarn rm web ui
+      - 33306:3306  # mysql
+      - 38042:8042  # yarn nm web ui
+      - 39083:9083  # hive-metastore
+      - 38998:8998  # livy
+      - 38080:8080  # griffin ui
+    tty: true
+    container_name: griffin
+  postgres:
+    build: ./postgresql
+    image: plume-postgres:0.2.6
+    hostname: postgres
+    volumes:
+      - postgresql_data:/var/lib/postgresql
+    ports:
+      - 35432:5432  # postgres
+    tty: true
+    container_name: postgres
+  # es:
+  #   image: bhlx3lyx7/elasticsearch
+  #   hostname: es
+  #   volumes:
+  #     - es_data:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 39200:9200
+  #     - 39300:9300
+  #   tty: true
+  #   container_name: es
