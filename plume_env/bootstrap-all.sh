@@ -80,13 +80,13 @@ hadoop fs -put /root/measure/griffin-measure.jar /griffin/
 
 # service
 cat /root/service/config/application.properties.template \
-    | sed "s|ES_HOSTNAME|$ES_URL|g" \
+    | sed "s|ES_URL|$ES_URL|g" \
     | sed "s|POSTGRESQL_HOSTNAME|$POSTGRESQL_HOSTNAME|g" \
     | sed "s|HOSTNAME|$HOSTNAME|g" \
     > /root/service/config/application.properties
 
 # json
-sed "s|ENV_ES_URL|$ENV_ES_URL|g" /root/json/env.json.template > /root/json/env.json
+sed "s|ES_URL|$ES_URL|g" /root/json/env.json.template > /root/json/env.json
 cp /root/json/env.json /root/service/config/env_batch.json
 hadoop fs -put json/*.json /griffin/json/
 
