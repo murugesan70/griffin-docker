@@ -20,6 +20,9 @@ ARG ENV_ES_URL
 ARG ENV_S3_ACCESS_KEY
 ARG ENV_S3_SECRET_KEY
 
+# make spark default log dir
+RUN mkdir /tmp/spark-events
+
 # make apache dir
 RUN mkdir /apache 
 WORKDIR /apache

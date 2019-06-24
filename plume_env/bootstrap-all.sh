@@ -7,8 +7,6 @@ cd $HADOOP_HOME/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; cu
 
 find /var/lib/mysql -type f -exec touch {} \; && service mysql start
 
-echo $S3_ACCESS_KEY_ID
-echo $S3_ACCESS_SECRET_KEY
 echo HOSTNAME = $HOSTNAME
 
 # core-site.xml
@@ -49,49 +47,51 @@ mr-jobhistory-daemon.sh start historyserver
 
 $HADOOP_HOME/bin/hdfs dfsadmin -safemode leave
 
-
-hadoop fs -mkdir -p /home/spark_conf
-hadoop fs -put $HIVE_HOME/conf/hive-site.xml /home/spark_conf/
-echo "spark.yarn.dist.files		hdfs:///home/spark_conf/hive-site.xml" >> $SPARK_HOME/conf/spark-defaults.conf
-
+# put hive-site.xml to spark conf
 cp $HIVE_HOME/conf/hive-site.xml $SPARK_HOME/conf/
+# and distribute it to each executor
+hadoop fs -mkdir -p /home/spark_conf
+hadoop fs -put -f $HIVE_HOME/conf/hive-site.xml /home/spark_conf/
+SPARK_YARN_DIST_FILES="spark.yarn.dist.files        hdfs:///home/spark_conf/hive-site.xml"
+if ! grep -Fq "$SPARK_YARN_DIST_FILES" $SPARK_HOME/conf/spark-defaults.conf; then
+    echo "$SPARK_YARN_DIST_FILES" >> $SPARK_HOME/conf/spark-defaults.conf
+fi
 
-
+# start spark
 $SPARK_HOME/sbin/start-all.sh
 
+# start hive
 nohup hiveserver2 --service metastore > metastore.log &
 
+# start livy
 nohup livy-server > livy.log &
 
 # griffin dir
-hadoop fs -mkdir /griffin
-hadoop fs -mkdir /griffin/json
-hadoop fs -mkdir /griffin/persist
-hadoop fs -mkdir /griffin/checkpoint
+hadoop fs -mkdir -p /griffin
+hadoop fs -mkdir -p /griffin/json
+hadoop fs -mkdir -p /griffin/persist
+hadoop fs -mkdir -p /griffin/checkpoint
+hadoop fs -mkdir -p /griffin/data
+hadoop fs -mkdir -p /griffin/data/batch
 
-hadoop fs -mkdir /griffin/data
-hadoop fs -mkdir /griffin/data/batch
+# griffin measure
+hadoop fs -put -f /root/measure/griffin-measure.jar /griffin/
 
-
-
-# measure file
-hadoop fs -put /root/measure/griffin-measure.jar /griffin/
-
-
-# service
+# griffin service
 cat /root/service/config/application.properties.template \
     | sed "s|ES_URL|$ES_URL|g" \
     | sed "s|POSTGRESQL_HOSTNAME|$POSTGRESQL_HOSTNAME|g" \
     | sed "s|HOSTNAME|$HOSTNAME|g" \
     > /root/service/config/application.properties
 
-# json
+# griffin env
 sed "s|ES_URL|$ES_URL|g" /root/json/env.json.template > /root/json/env.json
 cp /root/json/env.json /root/service/config/env_batch.json
-hadoop fs -put json/*.json /griffin/json/
+hadoop fs -put -f /root/json/*.json /griffin/json/
 
+# start griffin service
 cd /root/service
 nohup java -jar -Xmx1500m service.jar > service.log &
-cd /root
 
+cd /root
 /bin/bash -c "bash"
