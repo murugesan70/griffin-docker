@@ -1,9 +1,8 @@
 #!/bin/bash
+set -euo pipefail
 
 $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-rm /apache/pids/*
-
-cd $HADOOP_HOME/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; curl -LO $cp ; done; cd -
+rm -f /apache/pids/*
 
 find /var/lib/mysql -type f -exec touch {} \; && service mysql start
 
@@ -93,5 +92,5 @@ hadoop fs -put -f /root/json/*.json /griffin/json/
 cd /root/service
 nohup java -jar -Xmx1500m service.jar > service.log &
 
+# workdir
 cd /root
-/bin/bash -c "bash"
