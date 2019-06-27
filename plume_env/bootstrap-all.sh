@@ -94,3 +94,6 @@ nohup java -jar -Xmx1500m service.jar > service.log &
 
 # workdir
 cd /root
+
+# keeps container running
+/bin/bash
