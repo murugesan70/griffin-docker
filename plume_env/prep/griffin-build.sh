@@ -4,15 +4,15 @@
 mkdir -p /root/measure
 mkdir -p /root/service
 
-aws s3 cp s3://plume-dist/griffin/griffin-0.5.0-bin.tar.gz ./
+aws s3 cp s3://plume-dist/griffin/griffin-0.6.0-plume-bin.tar.gz ./
 if [ $? -eq 0 ]; then
-    tar -xvf griffin-0.5.0-bin.tar.gz
+    tar -xvf griffin-0.6.0-plume-bin.tar.gz
 
-    ln -s /apache/griffin-0.5.0/griffin-measure.jar     /root/measure
-    ln -s /apache/griffin-0.5.0/service.jar             /root/service
+    ln -s /apache/griffin-0.6.0-plume/griffin-measure.jar     /root/measure
+    ln -s /apache/griffin-0.6.0-plume/service.jar             /root/service
 
     # cleanup and remove
-    rm griffin-0.5.0-bin.tar.gz
+    rm griffin-0.6.0-plume-bin.tar.gz
 else
     # git
     apt-get update
