@@ -8,14 +8,11 @@ services:
     build:
       context: .
       args:
-        - ENV_ES_URL                        # elasticsearch, url,
-                                            #   plume uses external es, this value is defined in .env
-                                            #   in case you do not have any ->
-                                            #     - uncomment es (volume, link, service)
-                                            #     - set ENV_ES_URL=http://es
-        - ENV_S3_ACCESS_KEY                 # this value is defined in .env
-        - ENV_S3_SECRET_KEY                 # this value is defined in .env
-        - ENV_POSTGRESQL_HOSTNAME=postgres  # postgresql, hostname, service postgres
+        - ES_URL                        # elasticsearch, url,
+        - S3_ACCESS_KEY                 # this value is defined in .env
+        - S3_SECRET_KEY                 # this value is defined in .env
+        - POSTGRESQL_HOSTNAME=postgres  # postgresql, hostname, service postgres
+    env_file: .env
     image: plume-griffin:0.2.6
     hostname: griffin
     links:
