@@ -12,6 +12,7 @@ echo HOSTNAME = $HOSTNAME
 cat $HADOOP_HOME/etc/hadoop/core-site.xml.template \
     | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
     | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    | sed "s/S3A_ENDPOINT/$S3A_ENDPOINT/g" \
     | sed "s/HOSTNAME/$HOSTNAME/g" \
     > $HADOOP_HOME/etc/hadoop/core-site.xml
 
@@ -22,6 +23,7 @@ sed "s/HOSTNAME/$HOSTNAME/g" $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $H
 cat $HADOOP_HOME/etc/hadoop/mapred-site.xml.template \
     | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
     | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    | sed "s/S3A_ENDPOINT/$S3A_ENDPOINT/g" \
     | sed "s/HOSTNAME/$HOSTNAME/g" \
     > $HADOOP_HOME/etc/hadoop/mapred-site.xml
 
@@ -29,12 +31,14 @@ cat $HADOOP_HOME/etc/hadoop/mapred-site.xml.template \
 cat $HADOOP_HOME/etc/hadoop/hdfs-site.xml.template \
     | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
     | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    | sed "s/S3A_ENDPOINT/$S3A_ENDPOINT/g" \
     > $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 
 # hive-site.xml
 cat $HIVE_HOME/conf/hive-site.xml.template \
     | sed "s/S3_ACCESS_KEY_ID/$S3_ACCESS_KEY_ID/g" \
     | sed "s/S3_ACCESS_SECRET_KEY/$S3_ACCESS_SECRET_KEY/g" \
+    | sed "s/S3A_ENDPOINT/$S3A_ENDPOINT/g" \
     | sed "s/HOSTNAME/$HOSTNAME/g" \
     > $HIVE_HOME/conf/hive-site.xml
 

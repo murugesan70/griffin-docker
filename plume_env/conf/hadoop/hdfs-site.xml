@@ -87,7 +87,7 @@
 </property>
 <property>
   <name>fs.s3a.endpoint</name>
-  <value>s3.eu-central-1.amazonaws.com</value>
+  <value>S3A_ENDPOINT</value>
 </property>
 <property>
   <name>fs.s3a.impl</name>
