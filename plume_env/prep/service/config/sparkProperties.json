@@ -4,7 +4,7 @@
     "name": "griffin",
     "queue": "default",
     "numExecutors": 2,
-    "executorCores": 1,
+    "executorCores": 8,
     "driverMemory": "1g",
     "executorMemory": "1g",
     "conf": {
