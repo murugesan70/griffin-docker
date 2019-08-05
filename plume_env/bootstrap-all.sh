@@ -17,7 +17,11 @@ cat $HADOOP_HOME/etc/hadoop/core-site.xml.template \
     > $HADOOP_HOME/etc/hadoop/core-site.xml
 
 # yarn-site.xml
-sed "s/HOSTNAME/$HOSTNAME/g" $HADOOP_HOME/etc/hadoop/yarn-site.xml.template > $HADOOP_HOME/etc/hadoop/yarn-site.xml
+cat $HADOOP_HOME/etc/hadoop/yarn-site.xml.template \
+    | sed "s/HOSTNAME/$HOSTNAME/g" \
+    | sed "s/YARN_NODEMANAGER_RESOURCE_MEMORY_MB/${YARN_NODEMANAGER_RESOURCE_MEMORY_MB:-8192}/g" \
+    | sed "s/YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB/${YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB:-8192}/g" \
+    > $HADOOP_HOME/etc/hadoop/yarn-site.xml
 
 # mapred-site.xml
 cat $HADOOP_HOME/etc/hadoop/mapred-site.xml.template \
@@ -41,6 +45,14 @@ cat $HIVE_HOME/conf/hive-site.xml.template \
     | sed "s/S3A_ENDPOINT/$S3A_ENDPOINT/g" \
     | sed "s/HOSTNAME/$HOSTNAME/g" \
     > $HIVE_HOME/conf/hive-site.xml
+
+# sparkProperties.json
+cat /root/service/config/sparkProperties.json.template \
+    | sed "s/SPARK_NUM_EXECUTORS/${SPARK_NUM_EXECUTORS:-2}/g" \
+    | sed "s/SPARK_EXECUTOR_CORES/${SPARK_EXECUTOR_CORES:-8}/g" \
+    | sed "s/SPARK_DRIVER_MEMORY/${SPARK_DRIVER_MEMORY:-1g}/g" \
+    | sed "s/SPARK_EXECUTOR_MEMORY/${SPARK_EXECUTOR_MEMORY:-1g}/g" \
+    > /root/service/config/sparkProperties.json
 
 /etc/init.d/ssh start
 

@@ -3,10 +3,10 @@
     "className": "org.apache.griffin.measure.Application",
     "name": "griffin",
     "queue": "default",
-    "numExecutors": 2,
-    "executorCores": 8,
-    "driverMemory": "1g",
-    "executorMemory": "1g",
+    "numExecutors": SPARK_NUM_EXECUTORS,
+    "executorCores": SPARK_EXECUTOR_CORES,
+    "driverMemory": "SPARK_DRIVER_MEMORY",
+    "executorMemory": "SPARK_EXECUTOR_MEMORY",
     "conf": {
         "spark.yarn.dist.files": "hdfs:///home/spark_conf/hive-site.xml"
     },

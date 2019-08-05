@@ -116,9 +116,6 @@ RUN /etc/bootstrap.sh \
     && /apache/hdfs_file.sh \
     && rm /apache/*.sh
 
-#RUN chmod 755 prepare.sh
-#RUN ./prepare.sh
-
 # add bootstrap-all
 ADD bootstrap-all.sh /etc/
 RUN chmod 755 /etc/bootstrap-all.sh

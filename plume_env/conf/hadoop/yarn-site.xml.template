@@ -57,9 +57,16 @@
     <name>yarn.nodemanager.pmem-check-enabled</name>
     <value>false</value>
 </property>
-
 <property>
     <name>yarn.nodemanager.vmem-check-enabled</name>
     <value>false</value>
+</property>
+<property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>YARN_NODEMANAGER_RESOURCE_MEMORY_MB</value>
+</property>
+<property>
+    <name>yarn.scheduler.maximum-allocation-mb</name>
+    <value>YARN_SCHEDULER_MAXIMUM_ALLOCATION_MB</value>
 </property>
 </configuration>
