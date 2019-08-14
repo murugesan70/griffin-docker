@@ -728,7 +728,7 @@
   </property>
   <property>
     <name>hive.metastore.schema.verification</name>
-    <value>true</value>
+    <value>false</value>
     <description>
       Enforce metastore schema version consistency.
       True: Verify that version information stored in is compatible with one from Hive jars.  Also disable automatic
@@ -5893,5 +5893,21 @@
 <property>
   <name>fs.s3a.impl</name>
   <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+</property>
+<property>
+  <name>hive.supports.subdirectories</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.input.dir.recursive</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.mapred.supports.subdirectories</name>
+  <value>true</value>
+</property>
+<property>
+  <name>mapred.input.dir.recursive</name>
+  <value>true</value>
 </property>
 </configuration>
