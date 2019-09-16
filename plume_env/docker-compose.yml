@@ -33,7 +33,7 @@ services:
     container_name: griffin
   postgres:
     build: ./postgresql
-    image: plume-postgres:0.2.6
+    image: 013090004028.dkr.ecr.us-west-2.amazonaws.com/plume-postgres:0.2.6
     hostname: postgres
     volumes:
       - postgresql_data:/var/lib/postgresql
