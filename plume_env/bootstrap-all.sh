@@ -97,6 +97,13 @@ cat /root/service/config/application.properties.template \
     | sed "s|ES_URL|$ES_URL|g" \
     | sed "s|POSTGRESQL_HOSTNAME|$POSTGRESQL_HOSTNAME|g" \
     | sed "s|HOSTNAME|$HOSTNAME|g" \
+    | sed "s|GRIFFIN_LOGIN_STRATEGY|${GRIFFIN_LOGIN_STRATEGY:-default}|g" \
+    | sed "s|GRIFFIN_LDAP_URL|${GRIFFIN_LDAP_URL:-}|g" \
+    | sed "s|GRIFFIN_LDAP_EMAIL|${GRIFFIN_LDAP_EMAIL:-}|g" \
+    | sed "s|GRIFFIN_LDAP_SEARCHBASE|${GRIFFIN_LDAP_SEARCHBASE:-}|g" \
+    | sed "s|GRIFFIN_LDAP_SEARCHPATTERN|${GRIFFIN_LDAP_SEARCHPATTERN:-}|g" \
+    | sed "s|GRIFFIN_LDAP_BINDDN|${GRIFFIN_LDAP_BINDDN:-}|g" \
+    | sed "s|GRIFFIN_LDAP_BINDPASSWORD|${GRIFFIN_LDAP_BINDPASSWORD:-}|g" \
     > /root/service/config/application.properties
 
 # griffin env

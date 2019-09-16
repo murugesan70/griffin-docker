@@ -54,13 +54,15 @@ external.config.location = config
 external.env.location = config
 
 # login strategy ("default" or "ldap")
-login.strategy = default
+login.strategy=GRIFFIN_LOGIN_STRATEGY
 
 # ldap
-ldap.url = ldap://hostname:port
-ldap.email = @example.com
-ldap.searchBase = DC=org,DC=example
-ldap.searchPattern = (sAMAccountName={0})
+ldap.url=GRIFFIN_LDAP_URL
+ldap.email=GRIFFIN_LDAP_EMAIL
+ldap.searchBase=GRIFFIN_LDAP_SEARCHBASE
+ldap.searchPattern=GRIFFIN_LDAP_SEARCHPATTERN
+ldap.bindDN=GRIFFIN_LDAP_BINDDN
+ldap.bindPassword=GRIFFIN_LDAP_BINDPASSWORD
 
 # hdfs
 fs.defaultFS = hdfs://HOSTNAME:9000
@@ -74,5 +76,10 @@ elasticsearch.scheme = http
 
 # livy
 livy.uri=http://HOSTNAME:8998/batches
+livy.need.queue=false
+livy.task.max.concurrent.count=20
+livy.task.submit.interval.second=3
+livy.task.appId.retry.count=3
+
 # yarn url
 yarn.uri=http://HOSTNAME:8088

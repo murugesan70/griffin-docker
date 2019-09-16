@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-MAINTAINER org.apache.griffin
 
 # install wget, ssh, unzip...
 RUN apt-get update \
