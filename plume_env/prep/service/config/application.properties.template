@@ -58,11 +58,12 @@ login.strategy=GRIFFIN_LOGIN_STRATEGY
 
 # ldap
 ldap.url=GRIFFIN_LDAP_URL
-ldap.email=GRIFFIN_LDAP_EMAIL
-ldap.searchBase=GRIFFIN_LDAP_SEARCHBASE
-ldap.searchPattern=GRIFFIN_LDAP_SEARCHPATTERN
 ldap.bindDN=GRIFFIN_LDAP_BINDDN
 ldap.bindPassword=GRIFFIN_LDAP_BINDPASSWORD
+ldap.userSearchBase=GRIFFIN_LDAP_USER_SEARCH_BASE
+ldap.userSearchPattern=GRIFFIN_LDAP_USER_SEARCH_PATTERN
+ldap.groupSearchBase=GRIFFIN_LDAP_GROUP_SEARCH_BASE
+ldap.groupSearchPattern=GRIFFIN_LDAP_GROUP_SEARCH_PATTERN
 
 # hdfs
 fs.defaultFS = hdfs://HOSTNAME:9000
