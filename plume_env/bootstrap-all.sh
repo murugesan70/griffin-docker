@@ -106,6 +106,8 @@ cat /root/service/config/application.properties.template \
     | sed "s|GRIFFIN_LDAP_GROUP_SEARCH_PATTERN|${GRIFFIN_LDAP_GROUP_SEARCH_PATTERN:-}|g" \
     | sed "s|GRIFFIN_LDAP_BINDDN|${GRIFFIN_LDAP_BINDDN:-}|g" \
     | sed "s|GRIFFIN_LDAP_BINDPASSWORD|${GRIFFIN_LDAP_BINDPASSWORD:-}|g" \
+    | sed "s|PLUME_KEY_STORE|${PLUME_KEY_STORE:-}|g" \
+    | sed "s|PLUME_KEY_PASSWORD|${PLUME_KEY_PASSWORD:-}|g" \
     > /root/service/config/application.properties
 
 # griffin env

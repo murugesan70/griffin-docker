@@ -14,7 +14,7 @@ services:
         - S3A_ENDPOINT=s3.amazonaws.com
         - POSTGRESQL_HOSTNAME=postgres  # postgresql, hostname, service postgres
     env_file: .env
-    image: 013090004028.dkr.ecr.us-west-2.amazonaws.com/plume-griffin:0.2.8
+    image: 013090004028.dkr.ecr.us-west-2.amazonaws.com/plume-griffin:0.2.9
     hostname: griffin
     links:
       - postgres
@@ -29,6 +29,7 @@ services:
       - 39083:9083  # hive-metastore
       - 38998:8998  # livy
       - 38080:8080  # griffin ui
+      - 38443:8443  # griffin https ui
     tty: true
     container_name: griffin
   postgres:
