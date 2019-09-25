@@ -29,7 +29,6 @@ services:
       - 39083:9083  # hive-metastore
       - 38998:8998  # livy
       - 38080:8080  # griffin ui
-      - 38443:8443  # griffin https ui
     tty: true
     container_name: griffin
   postgres:

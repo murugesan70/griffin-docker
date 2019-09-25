@@ -86,7 +86,6 @@ livy.task.appId.retry.count=3
 yarn.uri=http://HOSTNAME:8088
 
 # https
-server.port=8443
 security.require-ssl=true
 server.ssl.key-store-type=PKCS12
 server.ssl.key-store=PLUME_KEY_STORE
