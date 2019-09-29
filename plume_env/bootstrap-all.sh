@@ -108,6 +108,10 @@ cat /root/service/config/application.properties.template \
     | sed "s|GRIFFIN_LDAP_BINDPASSWORD|${GRIFFIN_LDAP_BINDPASSWORD:-}|g" \
     | sed "s|PLUME_KEY_STORE|${PLUME_KEY_STORE:-}|g" \
     | sed "s|PLUME_KEY_PASSWORD|${PLUME_KEY_PASSWORD:-}|g" \
+    | sed "s|LIVY_NEED_QUEUE|${LIVY_NEED_QUEUE:-true}|g" \
+    | sed "s|LIVY_TASK_MAX_CONCURRENT_COUNT|${LIVY_TASK_MAX_CONCURRENT_COUNT:-100}|g" \
+    | sed "s|LIVY_TASK_SUBMIT_INTERVAL_SECOND|${LIVY_TASK_SUBMIT_INTERVAL_SECOND:-3}|g" \
+    | sed "s|LIVY_TASK_APPID_RETRY_COUNT|${LIVY_TASK_APPID_RETRY_COUNT:-3}|g" \
     > /root/service/config/application.properties
 
 # griffin env
