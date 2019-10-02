@@ -4,19 +4,19 @@
 mkdir -p /root/measure
 mkdir -p /root/service
 
-aws s3 cp s3://plume-dist/griffin/griffin-0.6.0-auth-plume-bin.tar.gz ./
-if [ $? -eq 0 ]; then
-    tar -xvf griffin-0.6.0-auth-plume-bin.tar.gz
+# aws s3 cp s3://plume-dist/griffin/griffin-0.6.0-auth-plume-bin.tar.gz ./
+# if [ $? -eq 0 ]; then
+#     tar -xvf griffin-0.6.0-auth-plume-bin.tar.gz
 
-    # griffin service api auth
-    # built from https://github.com/plume-design/griffin.git
-    # branch griffin-221
-    ln -s /apache/griffin-0.6.0-auth-plume/griffin-measure.jar     /root/measure
-    ln -s /apache/griffin-0.6.0-auth-plume/service.jar             /root/service
+#     # griffin service api auth
+#     # built from https://github.com/plume-design/griffin.git
+#     # branch griffin-221
+#     ln -s /apache/griffin-0.6.0-auth-plume/griffin-measure.jar     /root/measure
+#     ln -s /apache/griffin-0.6.0-auth-plume/service.jar             /root/service
 
-    # cleanup and remove
-    rm griffin-0.6.0-auth-plume-bin.tar.gz
-else
+#     # cleanup and remove
+#     rm griffin-0.6.0-auth-plume-bin.tar.gz
+# else
     # git
     apt-get update
     apt-get install git -y
@@ -31,10 +31,9 @@ else
     git clone https://github.com/plume-design/griffin.git
     cd griffin/
     echo "$pwd"
-    # griffin service api auth
-    # currently implemented only in our repo (plume-design/griffin)
-    # in this branch (griffin-221)
-    git checkout griffin-221
+    # griffin master + griffin-221 + griffin-293
+    # griffin-221 + griffin-293 are currently implemented only in our repo (plume-design/griffin)
+    git checkout production
     /apache/maven/bin/mvn clean install -DskipTests
 
     cp measure/target/measure-*-SNAPSHOT.jar /root/measure/griffin-measure.jar
@@ -44,6 +43,6 @@ else
     rmdir --ignore-fail-on-non-empty -p /apache/griffin
     rm /apache/maven
     rmdir --ignore-fail-on-non-empty -p /apache/apache-maven-3.3.9
-fi
+# fi
 
 cd /root/
