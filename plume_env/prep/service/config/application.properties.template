@@ -70,8 +70,8 @@ fs.defaultFS = hdfs://HOSTNAME:9000
 
 # elasticsearch
 elasticsearch.host = ES_URL
-elasticsearch.port = 9200
-elasticsearch.scheme = http
+elasticsearch.port = -1
+elasticsearch.scheme = https
 # elasticsearch.user = user
 # elasticsearch.password = password
 

@@ -23,9 +23,9 @@ tar -xvf scala-2.11.8.tgz
 ln -s scala-2.11.8 scala
 
 # spark
-wget http://archive.apache.org/dist/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz
-tar -xvf spark-2.2.1-bin-hadoop2.7.tgz
-ln -s spark-2.2.1-bin-hadoop2.7 spark
+wget http://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
+tar -xvf spark-2.4.4-bin-hadoop2.7.tgz
+ln -s spark-2.4.4-bin-hadoop2.7 spark
 
 # hive
 wget http://archive.apache.org/dist/hive/hive-2.3.4/apache-hive-2.3.4-bin.tar.gz
@@ -74,7 +74,7 @@ mkdir -p /root/jars
 mv hive-serde-*.jar /root/jars
 
 # remove install packages
-rm jdk8-linux-x64.tar.gz hadoop-2.7.3.tar.gz scala-2.11.8.tgz spark-2.2.1-bin-hadoop2.7.tgz apache-hive-2.3.4-bin.tar.gz livy-server-0.3.0.zip
+rm jdk8-linux-x64.tar.gz hadoop-2.7.3.tar.gz scala-2.11.8.tgz spark-2.4.4-bin-hadoop2.7.tgz apache-hive-2.3.4-bin.tar.gz livy-server-0.3.0.zip
 
 # remove extra files
 rm -rf hadoop/share/doc

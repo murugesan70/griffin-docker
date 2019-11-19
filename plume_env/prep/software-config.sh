@@ -20,4 +20,5 @@ sed s/HOSTNAME/localhost/ hive/conf/hive-site.xml.template > hive/conf/hive-site
 
 # livy
 cp conf/livy/* livy/conf/
+cat livy/conf/livy.conf.template | sed "s|SPARK_MASTER|${SPARK_MASTER:-"yarn"}|g" > livy/conf/livy.conf
 mkdir livy/logs

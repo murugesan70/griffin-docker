@@ -47,12 +47,35 @@ cat $HIVE_HOME/conf/hive-site.xml.template \
     > $HIVE_HOME/conf/hive-site.xml
 
 # sparkProperties.json
-cat /root/service/config/sparkProperties.json.template \
-    | sed "s/SPARK_NUM_EXECUTORS/${SPARK_NUM_EXECUTORS:-2}/g" \
-    | sed "s/SPARK_EXECUTOR_CORES/${SPARK_EXECUTOR_CORES:-8}/g" \
-    | sed "s/SPARK_DRIVER_MEMORY/${SPARK_DRIVER_MEMORY:-1g}/g" \
-    | sed "s/SPARK_EXECUTOR_MEMORY/${SPARK_EXECUTOR_MEMORY:-1g}/g" \
+if [[ ${SPARK_MASTER:-"yarn"} == "yarn" ]]; then
+    cat /root/service/config/sparkPropertiesYarn.json.template \
+        | sed "s/SPARK_NUM_EXECUTORS/${SPARK_NUM_EXECUTORS:-2}/g" \
+        | sed "s/SPARK_EXECUTOR_CORES/${SPARK_EXECUTOR_CORES:-8}/g" \
+        | sed "s/SPARK_DRIVER_MEMORY/${SPARK_DRIVER_MEMORY:-1g}/g" \
+        | sed "s/SPARK_EXECUTOR_MEMORY/${SPARK_EXECUTOR_MEMORY:-1g}/g" \
     > /root/service/config/sparkProperties.json
+else
+    cat /root/service/config/sparkPropertiesKubernetes.json.template \
+        | sed "s/SPARK_NUM_EXECUTORS/${SPARK_NUM_EXECUTORS:-2}/g" \
+        | sed "s/SPARK_EXECUTOR_CORES/${SPARK_EXECUTOR_CORES:-8}/g" \
+        | sed "s/SPARK_DRIVER_MEMORY/${SPARK_DRIVER_MEMORY:-1g}/g" \
+        | sed "s/SPARK_EXECUTOR_MEMORY/${SPARK_EXECUTOR_MEMORY:-1g}/g" \
+        | sed "s/SPARK_KUBERNETES_CONTAINER_IMAGE/${SPARK_KUBERNETES_CONTAINER_IMAGE}/g" \
+        | sed "s/SPARK_KUBERNETES_NAMESPACE/${SPARK_KUBERNETES_NAMESPACE}/g" \
+        | sed "s/SPARK_KUBERNETES_AUTHENTICATE_SERVICEACCOUNTNAME/${SPARK_KUBERNETES_AUTHENTICATE_SERVICEACCOUNTNAME}/g" \
+        | sed "s/SPARK_KUBERNETES_AUTHENTICATE_OAUTHTOKEN/${SPARK_KUBERNETES_AUTHENTICATE_OAUTHTOKEN}/g" \
+        | sed "s/SPARK_SQL_HIVE_METASTORE_VERSION/${SPARK_SQL_HIVE_METASTORE_VERSION}/g" \
+        | sed "s/SPARK_SQL_HIVE_METASTORE_DBNAME/${SPARK_SQL_HIVE_METASTORE_DBNAME}/g" \
+        | sed "s/SPARK_HADOOP_HIVE_METASTORE_URIS/${SPARK_HADOOP_HIVE_METASTORE_URIS}/g" \
+        | sed "s/SPARK_HADOOP_FS_S3A_ACCESS_KEY/${SPARK_HADOOP_FS_S3A_ACCESS_KEY}/g" \
+        | sed "s/SPARK_HADOOP_FS_S3A_SECRET_KEY/${SPARK_HADOOP_FS_S3A_SECRET_KEY}/g" \
+        | sed "s/SPARK_HADOOP_FS_S3A_ENDPOINT/${SPARK_HADOOP_FS_S3A_ENDPOINT}/g" \
+        | sed "s/SPARK_DRIVER_HOST/${SPARK_DRIVER_HOST}/g" \
+        | sed "s/SPARK_DRIVER_BINDADDRESS/${SPARK_DRIVER_BINDADDRESS}/g" \
+        | sed "s/SPARK_DRIVER_PORT/${SPARK_DRIVER_PORT}/g" \
+        | sed "s/SPARK_BLOCKMANAGER_PORT/${SPARK_BLOCKMANAGER_PORT}/g" \
+    > /root/service/config/sparkProperties.json
+fi
 
 /etc/init.d/ssh start
 
@@ -94,7 +117,7 @@ hadoop fs -put -f /root/measure/griffin-measure.jar /griffin/
 
 # griffin service
 cat /root/service/config/application.properties.template \
-    | sed "s|ES_URL|$ES_URL|g" \
+    | sed "s|ES_URL|${ES_URL#*//}|g" \
     | sed "s|POSTGRESQL_HOSTNAME|$POSTGRESQL_HOSTNAME|g" \
     | sed "s|HOSTNAME|$HOSTNAME|g" \
     | sed "s|GRIFFIN_LOGIN_STRATEGY|${GRIFFIN_LOGIN_STRATEGY:-default}|g" \
@@ -113,6 +136,7 @@ cat /root/service/config/application.properties.template \
     | sed "s|LIVY_TASK_SUBMIT_INTERVAL_SECOND|${LIVY_TASK_SUBMIT_INTERVAL_SECOND:-3}|g" \
     | sed "s|LIVY_TASK_APPID_RETRY_COUNT|${LIVY_TASK_APPID_RETRY_COUNT:-3}|g" \
     > /root/service/config/application.properties
+
 
 # griffin env
 sed "s|ES_URL|$ES_URL|g" /root/json/env.json.template > /root/json/env.json

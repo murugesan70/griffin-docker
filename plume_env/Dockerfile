@@ -19,6 +19,7 @@ ARG ES_URL
 ARG S3_ACCESS_KEY
 ARG S3_SECRET_KEY
 ARG S3A_ENDPOINT
+ARG SPARK_MASTER
 
 # make spark default log dir
 RUN mkdir /tmp/spark-events
