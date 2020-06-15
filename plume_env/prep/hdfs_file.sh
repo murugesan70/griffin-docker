@@ -26,12 +26,9 @@ echo hadoop fs -put $HADOOP_AWS_HOME/* /home/spark_lib/
 #hadoop fs -put $HADOOP_AWS_HOME/* /home/spark_lib/
 
 # avro
-wget http://central.maven.org/maven2/com/databricks/spark-avro_2.11/4.0.0/spark-avro_2.11-4.0.0.jar
+wget https://repo.maven.apache.org/maven2/com/databricks/spark-avro_2.11/4.0.0/spark-avro_2.11-4.0.0.jar
 hadoop fs -put spark-avro_2.11-4.0.0.jar /home/spark_lib/
 rm spark-avro_2.11-4.0.0.jar
-
-
-
 
 #measure file
 #hadoop fs -put measure/griffin-measure.jar /griffin/
