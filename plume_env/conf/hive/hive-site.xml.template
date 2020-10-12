@@ -728,7 +728,7 @@
   </property>
   <property>
     <name>hive.metastore.schema.verification</name>
-    <value>true</value>
+    <value>false</value>
     <description>
       Enforce metastore schema version consistency.
       True: Verify that version information stored in is compatible with one from Hive jars.  Also disable automatic
@@ -3474,7 +3474,7 @@
   </property>
   <property>
     <name>hive.cli.print.header</name>
-    <value>false</value>
+    <value>true</value>
     <description>Whether to print the names of the columns in query output.</description>
   </property>
   <property>
@@ -5863,11 +5863,11 @@
   <value>S3_ACCESS_SECRET_KEY</value>
  </property>
 <property>
-  <name>fs.s3a.awsAccessKeyId</name>
+  <name>fs.s3a.access.key</name>
   <value>S3_ACCESS_KEY_ID</value>
  </property>
  <property>
-  <name>fs.s3a.awsSecretAccessKey</name>
+  <name>fs.s3a.secret.key</name>
   <value>S3_ACCESS_SECRET_KEY</value>
  </property>
 <property>
@@ -5882,9 +5882,32 @@
   <name>fs.s3.impl</name>
   <value>org.apache.hadoop.fs.s3.S3FileSystem</value>
 </property>
-
 <property>
   <name>fs.s3n.impl</name>
   <value>org.apache.hadoop.fs.s3native.NativeS3FileSystem</value>
+</property>
+<property>
+  <name>fs.s3a.endpoint</name>
+  <value>S3A_ENDPOINT</value>
+</property>
+<property>
+  <name>fs.s3a.impl</name>
+  <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+</property>
+<property>
+  <name>hive.supports.subdirectories</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.input.dir.recursive</name>
+  <value>true</value>
+</property>
+<property>
+  <name>hive.mapred.supports.subdirectories</name>
+  <value>true</value>
+</property>
+<property>
+  <name>mapred.input.dir.recursive</name>
+  <value>true</value>
 </property>
 </configuration>

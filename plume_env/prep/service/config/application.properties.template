@@ -54,25 +54,40 @@ external.config.location = config
 external.env.location = config
 
 # login strategy ("default" or "ldap")
-login.strategy = default
+login.strategy=GRIFFIN_LOGIN_STRATEGY
 
 # ldap
-ldap.url = ldap://hostname:port
-ldap.email = @example.com
-ldap.searchBase = DC=org,DC=example
-ldap.searchPattern = (sAMAccountName={0})
+ldap.url=GRIFFIN_LDAP_URL
+ldap.bindDN=GRIFFIN_LDAP_BINDDN
+ldap.bindPassword=GRIFFIN_LDAP_BINDPASSWORD
+ldap.userSearchBase=GRIFFIN_LDAP_USER_SEARCH_BASE
+ldap.userSearchPattern=GRIFFIN_LDAP_USER_SEARCH_PATTERN
+ldap.groupSearchBase=GRIFFIN_LDAP_GROUP_SEARCH_BASE
+ldap.groupSearchPattern=GRIFFIN_LDAP_GROUP_SEARCH_PATTERN
 
 # hdfs
 fs.defaultFS = hdfs://HOSTNAME:9000
 
 # elasticsearch
 elasticsearch.host = ES_URL
-elasticsearch.port = 9200
-elasticsearch.scheme = http
+elasticsearch.port = -1
+elasticsearch.scheme = https
 # elasticsearch.user = user
 # elasticsearch.password = password
 
 # livy
 livy.uri=http://HOSTNAME:8998/batches
+livy.need.queue=LIVY_NEED_QUEUE
+livy.task.max.concurrent.count=LIVY_TASK_MAX_CONCURRENT_COUNT
+livy.task.submit.interval.second=LIVY_TASK_SUBMIT_INTERVAL_SECOND
+livy.task.appId.retry.count=LIVY_TASK_APPID_RETRY_COUNT
+
 # yarn url
 yarn.uri=http://HOSTNAME:8088
+
+# https
+security.require-ssl=true
+server.ssl.key-store-type=PKCS12
+server.ssl.key-store=PLUME_KEY_STORE
+server.ssl.key-store-password=PLUME_KEY_PASSWORD
+server.ssl.key-alias=griffin

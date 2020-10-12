@@ -1,0 +1,28 @@
+{
+    "file": "local:///opt/spark/jars/griffin-measure.jar",
+    "className": "org.apache.griffin.measure.Application",
+    "name": "griffin",
+    "queue": "default",
+    "numExecutors": SPARK_NUM_EXECUTORS,
+    "executorCores": SPARK_EXECUTOR_CORES,
+    "driverMemory": "SPARK_DRIVER_MEMORY",
+    "executorMemory": "SPARK_EXECUTOR_MEMORY",
+    "conf": {
+        "spark.kubernetes.container.image": SPARK_KUBERNETES_CONTAINER_IMAGE,
+        "spark.kubernetes.namespace": SPARK_KUBERNETES_NAMESPACE,
+        "spark.kubernetes.authenticate.serviceAccountName": SPARK_KUBERNETES_AUTHENTICATE_SERVICEACCOUNTNAME,
+        "spark.kubernetes.authenticate.oauthToken": SPARK_KUBERNETES_AUTHENTICATE_OAUTHTOKEN,
+        "spark.sql.hive.metastore.version": SPARK_SQL_HIVE_METASTORE_VERSION,
+        "spark.sql.hive.metastore.dbname": SPARK_SQL_HIVE_METASTORE_DBNAME,
+        "spark.hadoop.hive.metastore.uris": SPARK_HADOOP_HIVE_METASTORE_URIS,
+        "spark.hadoop.fs.s3a.access.key": SPARK_HADOOP_FS_S3A_ACCESS_KEY,
+        "spark.hadoop.fs.s3a.secret.key": SPARK_HADOOP_FS_S3A_SECRET_KEY,
+        "spark.hadoop.fs.s3a.endpoint": SPARK_HADOOP_FS_S3A_ENDPOINT,
+        "spark.driver.host": SPARK_DRIVER_HOST,
+        "spark.driver.bindAddress": SPARK_DRIVER_BINDADDRESS,
+        "spark.driver.port": SPARK_DRIVER_PORT,
+        "spark.blockManager.port": SPARK_BLOCKMANAGER_PORT
+    },
+    "files": [
+    ]
+}

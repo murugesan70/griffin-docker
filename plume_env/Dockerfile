@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-MAINTAINER org.apache.griffin
 
 # install wget, ssh, unzip...
 RUN apt-get update \
@@ -15,10 +14,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install mysql-server -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install libmysql-java -y
 
 # ARGs
-ARG ENV_POSTGRESQL_HOSTNAME
-ARG ENV_ES_URL
-ARG ENV_S3_ACCESS_KEY
-ARG ENV_S3_SECRET_KEY
+ARG POSTGRESQL_HOSTNAME
+ARG ES_URL
+ARG S3_ACCESS_KEY
+ARG S3_SECRET_KEY
+ARG S3A_ENDPOINT
+ARG SPARK_MASTER
+
+# make spark default log dir
+RUN mkdir /tmp/spark-events
 
 # make apache dir
 RUN mkdir /apache 
@@ -34,12 +38,13 @@ EXPOSE 2122
 RUN ./ssh-config.sh
 
 # ENVs
-ENV POSTGRESQL_HOSTNAME $ENV_POSTGRESQL_HOSTNAME
-ENV ES_URL $ENV_ES_URL
-ENV S3_ACCESS_KEY_ID $ENV_S3_ACCESS_KEY
-ENV AWS_ACCESS_KEY_ID $ENV_S3_ACCESS_KEY
-ENV S3_ACCESS_SECRET_KEY $ENV_S3_SECRET_KEY
-ENV AWS_SECRET_ACCESS_KEY $ENV_S3_SECRET_KEY
+ENV POSTGRESQL_HOSTNAME $POSTGRESQL_HOSTNAME
+ENV ES_URL $ES_URL
+ENV AWS_ACCESS_KEY_ID $S3_ACCESS_KEY
+ENV AWS_SECRET_ACCESS_KEY $S3_SECRET_KEY
+ENV S3_ACCESS_KEY_ID $S3_ACCESS_KEY
+ENV S3_ACCESS_SECRET_KEY $S3_SECRET_KEY
+ENV S3A_ENDPOINT $S3A_ENDPOINT
 
 # software install
 RUN ./software-install.sh
@@ -110,9 +115,6 @@ RUN hdfs namenode -format
 RUN /etc/bootstrap.sh \
     && /apache/hdfs_file.sh \
     && rm /apache/*.sh
-
-#RUN chmod 755 prepare.sh
-#RUN ./prepare.sh
 
 # add bootstrap-all
 ADD bootstrap-all.sh /etc/
