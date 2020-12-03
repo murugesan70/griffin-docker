@@ -2,19 +2,16 @@ version: '3.4'
 volumes:
   mysql_data:
   postgresql_data:
-#  es_data:
 services:
   griffin:
     build:
       context: .
       args:
         - ES_URL                        # elasticsearch, url,
-        - S3_ACCESS_KEY                 # this value is defined in .env
-        - S3_SECRET_KEY                 # this value is defined in .env
         - S3A_ENDPOINT=s3.amazonaws.com
         - POSTGRESQL_HOSTNAME=postgres  # postgresql, hostname, service postgres
     env_file: .env
-    image: 013090004028.dkr.ecr.us-west-2.amazonaws.com/plume-griffin:0.4.1
+    image: 013090004028.dkr.ecr.us-west-2.amazonaws.com/plume-griffin:0.4.2
     hostname: griffin
     links:
       - postgres
@@ -41,13 +38,4 @@ services:
       - 35432:5432  # postgres
     tty: true
     container_name: postgres
-  # es:
-  #   image: bhlx3lyx7/elasticsearch
-  #   hostname: es
-  #   volumes:
-  #     - es_data:/usr/share/elasticsearch/data
-  #   ports:
-  #     - 39200:9200
-  #     - 39300:9300
-  #   tty: true
-  #   container_name: es
+
